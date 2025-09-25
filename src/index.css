@@ -2,41 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Maternal Health AI Companion Design System
+All colors MUST be HSL. Warm, nurturing, trustworthy maternal care theme.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - warm, welcoming */
+    --background: 355 25% 97%;
+    --foreground: 340 15% 15%;
 
+    /* Card system - soft, nurturing */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 340 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 340 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - maternal coral */
+    --primary: 345 75% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 345 45% 85%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - calming sage */
+    --secondary: 155 25% 85%;
+    --secondary-foreground: 155 40% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - gentle neutrals */
+    --muted: 345 15% 92%;
+    --muted-foreground: 340 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - supportive purple */
+    --accent: 275 40% 75%;
+    --accent-foreground: 275 60% 15%;
+
+    /* Trust colors - medical blue */
+    --trust: 210 75% 70%;
+    --trust-foreground: 210 100% 15%;
+
+    /* Warning/Alert - warm orange */
+    --warning: 25 85% 65%;
+    --warning-foreground: 25 100% 15%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 345 25% 88%;
+    --input: 345 20% 92%;
+    --ring: 345 75% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Gradients - nurturing and supportive */
+    --gradient-maternal: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+    --gradient-trust: linear-gradient(135deg, hsl(var(--trust)) 0%, hsl(var(--primary)) 100%);
+
+    /* Shadows - gentle and caring */
+    --shadow-gentle: 0 4px 20px -8px hsl(var(--primary) / 0.25);
+    --shadow-warm: 0 8px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-trust: 0 6px 25px -8px hsl(var(--trust) / 0.2);
+
+    /* Typography scale */
+    --font-heading: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    /* Animations */
+    --transition-gentle: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
