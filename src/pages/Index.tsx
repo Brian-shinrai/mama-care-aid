@@ -152,6 +152,22 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Main Chat Interface */}
+      <section id="chat-section" className="py-20 px-4 bg-gradient-soft">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              Start Your Conversation
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Chat with Mama Care AI about your pregnancy, symptoms, or any concerns. 
+              Use text or voice - whatever feels most comfortable for you.
+            </p>
+          </div>
+          <ChatInterface />
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
@@ -230,22 +246,6 @@ const Index = () => {
               )}
             </DialogContent>
           </Dialog>
-        </div>
-      </section>
-
-      {/* Main Chat Interface */}
-      <section id="chat-section" className="py-20 px-4 bg-gradient-soft">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Start Your Conversation
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Chat with Mama Care AI about your pregnancy, symptoms, or any concerns. 
-              Use text or voice - whatever feels most comfortable for you.
-            </p>
-          </div>
-          <ChatInterface />
         </div>
       </section>
 
