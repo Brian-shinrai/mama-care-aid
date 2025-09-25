@@ -1,10 +1,91 @@
+import { useState } from 'react';
 import { ChatInterface } from '@/components/ChatInterface';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, Shield, Clock, Globe, Phone, Baby } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Heart, Shield, Clock, Globe, Phone, Baby, ChevronRight } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-maternal-health.jpg';
 
 const Index = () => {
+  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const features = [
+    {
+      id: 'availability',
+      icon: Clock,
+      title: '24/7 Availability',
+      description: 'Round-the-clock support whenever you need guidance, day or night.',
+      details: 'Our AI companion never sleeps, ensuring you have access to maternal health guidance at any hour. Whether it\'s 3 AM concerns about baby movements or questions during a busy afternoon, Mama Care AI is always ready to help.',
+      gradient: 'gradient-maternal',
+      borderColor: 'border-primary/10'
+    },
+    {
+      id: 'risk-detection',
+      icon: Shield,
+      title: 'Risk Detection',
+      description: 'Advanced AI monitoring to identify concerning symptoms and suggest immediate care.',
+      details: 'Using advanced pattern recognition, our AI can identify potential warning signs in your symptoms and guide you on when to seek immediate medical attention. This early detection system could be life-saving for you and your baby.',
+      gradient: 'gradient-trust',
+      borderColor: 'border-trust/20'
+    },
+    {
+      id: 'cultural-sensitivity',
+      icon: Globe,
+      title: 'Cultural Sensitivity',
+      description: 'Tailored guidance respecting local traditions and healthcare practices.',
+      details: 'We understand that maternal care varies across cultures. Our AI is trained to respect local traditions while providing medically sound advice, ensuring cultural sensitivity in every interaction.',
+      gradient: 'bg-accent',
+      borderColor: 'border-accent/20'
+    },
+    {
+      id: 'pregnancy-tracking',
+      icon: Baby,
+      title: 'Pregnancy Tracking',
+      description: 'Week-by-week development guidance and milestone celebrations.',
+      details: 'Follow your baby\'s development with weekly updates, milestone celebrations, and personalized guidance for each stage of your pregnancy journey. Track symptoms, appointments, and precious moments.',
+      gradient: 'bg-secondary',
+      borderColor: 'border-secondary/20'
+    },
+    {
+      id: 'emergency-connect',
+      icon: Phone,
+      title: 'Emergency Connect',
+      description: 'Instant connection to emergency services and healthcare providers.',
+      details: 'In critical situations, every second counts. Our emergency connect feature provides instant access to local emergency services, healthcare providers, and emergency protocols specific to your region.',
+      gradient: 'bg-warning',
+      borderColor: 'border-warning/20'
+    },
+    {
+      id: 'emotional-support',
+      icon: Heart,
+      title: 'Emotional Support',
+      description: 'Compassionate AI companion for mental health and emotional wellbeing.',
+      details: 'Pregnancy can be emotionally challenging. Our AI provides empathetic support, helps identify mood patterns, offers coping strategies, and knows when to recommend professional mental health resources.',
+      gradient: 'gradient-maternal',
+      borderColor: 'border-primary/20'
+    }
+  ];
+
+  const handleFeatureClick = (featureId: string) => {
+    setSelectedFeature(featureId);
+    toast({
+      title: 'Feature Details',
+      description: 'Learn more about this feature in the dialog.',
+    });
+  };
+
+  const scrollToChat = () => {
+    const chatSection = document.getElementById('chat-section');
+    if (chatSection) {
+      chatSection.scrollIntoView({ behavior: 'smooth' });
+      toast({
+        title: 'Ready to Chat!',
+        description: 'Start your conversation with Mama Care AI below.',
+      });
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-soft">
       {/* Hero Section */}
@@ -27,7 +108,12 @@ const Index = () => {
               symptom monitoring, and emergency support for mothers everywhere.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" variant="secondary" className="shadow-trust hover:shadow-warm transition-all duration-300">
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="shadow-trust hover:shadow-warm transition-all duration-300"
+                onClick={scrollToChat}
+              >
                 <Heart className="w-5 h-5 mr-2" />
                 Start Caring Journey
               </Button>
@@ -80,83 +166,75 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-primary/10 shadow-gentle hover:shadow-warm transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-maternal mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Clock className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">24/7 Availability</h3>
-                <p className="text-muted-foreground">
-                  Round-the-clock support whenever you need guidance, day or night.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-trust/20 shadow-gentle hover:shadow-trust transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-trust mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Shield className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Risk Detection</h3>
-                <p className="text-muted-foreground">
-                  Advanced AI monitoring to identify concerning symptoms and suggest immediate care.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-accent/20 shadow-gentle hover:shadow-warm transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Globe className="w-8 h-8 text-accent-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Cultural Sensitivity</h3>
-                <p className="text-muted-foreground">
-                  Tailored guidance respecting local traditions and healthcare practices.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-secondary/20 shadow-gentle hover:shadow-warm transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Baby className="w-8 h-8 text-secondary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Pregnancy Tracking</h3>
-                <p className="text-muted-foreground">
-                  Week-by-week development guidance and milestone celebrations.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-warning/20 shadow-gentle hover:shadow-warm transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-warning mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Phone className="w-8 h-8 text-warning-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Emergency Connect</h3>
-                <p className="text-muted-foreground">
-                  Instant connection to emergency services and healthcare providers.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-primary/20 shadow-gentle hover:shadow-warm transition-all duration-300 group">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-maternal mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Heart className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Emotional Support</h3>
-                <p className="text-muted-foreground">
-                  Compassionate AI companion for mental health and emotional wellbeing.
-                </p>
-              </CardContent>
-            </Card>
+            {features.map((feature) => {
+              const IconComponent = feature.icon;
+              return (
+                <Card 
+                  key={feature.id}
+                  className={`${feature.borderColor} shadow-gentle hover:shadow-warm transition-all duration-300 group cursor-pointer transform hover:scale-105`}
+                  onClick={() => handleFeatureClick(feature.id)}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-16 h-16 rounded-full ${feature.gradient} mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <IconComponent className="w-8 h-8 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                    <p className="text-muted-foreground mb-4">
+                      {feature.description}
+                    </p>
+                    <div className="flex items-center justify-center text-primary group-hover:text-primary/80 transition-colors">
+                      <span className="text-sm font-medium">Learn More</span>
+                      <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
+
+          {/* Feature Details Dialog */}
+          <Dialog open={!!selectedFeature} onOpenChange={() => setSelectedFeature(null)}>
+            <DialogContent className="max-w-md">
+              {selectedFeature && (
+                <>
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-3">
+                      {(() => {
+                        const feature = features.find(f => f.id === selectedFeature);
+                        if (!feature) return null;
+                        const IconComponent = feature.icon;
+                        return (
+                          <>
+                            <div className={`w-10 h-10 rounded-full ${feature.gradient} flex items-center justify-center`}>
+                              <IconComponent className="w-5 h-5 text-primary-foreground" />
+                            </div>
+                            {feature.title}
+                          </>
+                        );
+                      })()}
+                    </DialogTitle>
+                    <DialogDescription className="text-left mt-4">
+                      {features.find(f => f.id === selectedFeature)?.details}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="flex gap-3 mt-6">
+                    <Button onClick={scrollToChat} className="flex-1">
+                      <Heart className="w-4 h-4 mr-2" />
+                      Try This Feature
+                    </Button>
+                    <Button variant="outline" onClick={() => setSelectedFeature(null)}>
+                      Close
+                    </Button>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
 
       {/* Main Chat Interface */}
-      <section className="py-20 px-4 bg-gradient-soft">
+      <section id="chat-section" className="py-20 px-4 bg-gradient-soft">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-foreground mb-4">
