@@ -77,12 +77,12 @@ const Index = () => {
   };
 
   const scrollToChat = () => {
-    const chatSection = document.getElementById('chat-section');
-    if (chatSection) {
-      chatSection.scrollIntoView({ behavior: 'smooth' });
+    const heroSection = document.querySelector('section');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
       toast({
-        title: 'Ready to Chat!',
-        description: 'Start your conversation with Mama Care AI below.',
+        title: 'Chat is Ready! 💕',
+        description: 'Your caring AI companion is waiting to help you.',
       });
     }
   };
@@ -124,47 +124,21 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Chat Interface Preview */}
-          <div className="hidden lg:block">
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 shadow-warm border border-white/20">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 pb-4 border-b border-border/30">
-                  <div className="w-8 h-8 rounded-full bg-gradient-maternal flex items-center justify-center">
-                    <Heart className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm">Mama Care AI</p>
-                    <p className="text-xs text-muted-foreground">Online now</p>
-                  </div>
+          {/* Live Chat Interface */}
+          <div className="w-full lg:w-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20 shadow-2xl">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/20">
+                <div className="w-10 h-10 rounded-full bg-gradient-maternal flex items-center justify-center shadow-lg">
+                  <Heart className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <div className="bg-card rounded-2xl p-3 border border-primary/10">
-                  <p className="text-sm">Habari! How are you feeling today? I'm here to support you and your baby. 💕</p>
-                </div>
-                <div className="bg-gradient-maternal rounded-2xl p-3 ml-8">
-                  <p className="text-sm text-primary-foreground">I have some questions about nutrition...</p>
-                </div>
-                <div className="bg-card rounded-2xl p-3 border border-primary/10">
-                  <p className="text-sm">Great question! Let's talk about healthy foods for you and baby...</p>
+                <div>
+                  <h3 className="font-semibold text-primary-foreground">Mama Care AI</h3>
+                  <p className="text-sm text-primary-foreground/80">Ready to help you 24/7</p>
                 </div>
               </div>
+              <ChatInterface />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Main Chat Interface */}
-      <section id="chat-section" className="py-20 px-4 bg-gradient-soft">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Start Your Conversation
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Chat with Mama Care AI about your pregnancy, symptoms, or any concerns. 
-              Use text or voice - whatever feels most comfortable for you.
-            </p>
-          </div>
-          <ChatInterface />
         </div>
       </section>
 
