@@ -27,7 +27,6 @@ export const ChatInterface = () => {
   ]);
   const [inputText, setInputText] = useState('');
   const [isListening, setIsListening] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -77,16 +76,6 @@ export const ChatInterface = () => {
       };
 
       setMessages(prev => [...prev, aiMessage]);
-
-      // Speak the response if text-to-speech is available
-      if ('speechSynthesis' in window && !isListening) {
-        const utterance = new SpeechSynthesisUtterance(aiResponse.text);
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-        speechSynthesis.speak(utterance);
-      }
 
       // Show emergency alert if needed
       if (aiResponse.type === 'emergency') {
@@ -276,9 +265,6 @@ export const ChatInterface = () => {
 
   const stopListening = () => {
     setIsListening(false);
-    if ('speechSynthesis' in window) {
-      speechSynthesis.cancel();
-    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -350,16 +336,6 @@ export const ChatInterface = () => {
               </div>
             </div>
           ))}
-          {isSpeaking && (
-            <div className="flex justify-start">
-              <div className="bg-accent/10 text-accent-foreground rounded-2xl px-4 py-3 border border-accent/20">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-                  <p className="text-sm">Speaking...</p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </ScrollArea>
 
