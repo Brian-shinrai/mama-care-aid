@@ -9,6 +9,7 @@ import heroImage from '@/assets/hero-maternal-health.jpg';
 
 const Index = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const { toast } = useToast();
 
   const features = [
@@ -86,55 +87,230 @@ const Index = () => {
       });
     }
   };
+  const handleCardClick = (cardId: string) => {
+    setExpandedCard(expandedCard === cardId ? null : cardId);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-soft">
       {/* Navigation Cards Section */}
       <section className="py-12 px-4 bg-primary/5">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="border-primary/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+            {/* Home Card */}
+            <Card 
+              className={`border-primary/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'home' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('home')}
+            >
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-gradient-maternal mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Home className="w-6 h-6 text-primary-foreground" />
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-maternal flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'home' ? 'scale-110' : ''
+                    }`}>
+                      <Home className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        Home
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        Your maternal health journey starts here
+                      </CardDescription>
+                    </div>
+                  </div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'home' ? 'rotate-90' : ''
+                  }`} />
                 </div>
-                <CardTitle className="flex items-center justify-between">
-                  Home
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </CardTitle>
-                <CardDescription>
-                  Your maternal health journey starts here. Access personalized pregnancy guidance and 24/7 AI support.
-                </CardDescription>
               </CardHeader>
+              
+              {expandedCard === 'home' && (
+                <CardContent className="animate-fade-in">
+                  <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-primary/10">
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">24/7 AI Companion</h4>
+                      <p className="text-muted-foreground mb-4">
+                        Access personalized pregnancy guidance anytime, anywhere. Our AI understands your unique journey and provides culturally-sensitive support.
+                      </p>
+                      <Button onClick={scrollToChat} className="w-full">
+                        <Heart className="w-4 h-4 mr-2" />
+                        Start Your Journey
+                      </Button>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">What We Offer</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Week-by-week pregnancy tracking</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Symptom monitoring and alerts</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Emergency resource connection</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Multilingual support (English & Swahili)</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              )}
             </Card>
 
-            <Card className="border-trust/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+            {/* Solutions Card */}
+            <Card 
+              className={`border-trust/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'solutions' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('solutions')}
+            >
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-gradient-trust mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Lightbulb className="w-6 h-6 text-primary-foreground" />
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-trust flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'solutions' ? 'scale-110' : ''
+                    }`}>
+                      <Lightbulb className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        Solutions
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        AI-powered maternal care solutions
+                      </CardDescription>
+                    </div>
+                  </div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'solutions' ? 'rotate-90' : ''
+                  }`} />
                 </div>
-                <CardTitle className="flex items-center justify-between">
-                  Solutions
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </CardTitle>
-                <CardDescription>
-                  Comprehensive AI-powered maternal care: symptom monitoring, risk detection, and emergency support.
-                </CardDescription>
               </CardHeader>
+              
+              {expandedCard === 'solutions' && (
+                <CardContent className="animate-fade-in">
+                  <div className="grid md:grid-cols-3 gap-6 pt-4 border-t border-trust/10">
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-maternal flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Risk Detection</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Advanced AI monitoring identifies concerning symptoms and guides you on when to seek immediate care.
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
+                        <Baby className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Pregnancy Tracking</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Follow your baby's development with weekly updates, milestone celebrations, and personalized guidance.
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+                        <Globe className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Cultural Sensitivity</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Respectful of local traditions while providing medically sound advice for your community.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              )}
             </Card>
 
-            <Card className="border-accent/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+            {/* About Card */}
+            <Card 
+              className={`border-accent/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'about' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('about')}
+            >
               <CardHeader>
-                <div className="w-12 h-12 rounded-full bg-accent mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Info className="w-6 h-6 text-primary-foreground" />
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-accent flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'about' ? 'scale-110' : ''
+                    }`}>
+                      <Info className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        About
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        Our mission for accessible maternal care
+                      </CardDescription>
+                    </div>
+                  </div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'about' ? 'rotate-90' : ''
+                  }`} />
                 </div>
-                <CardTitle className="flex items-center justify-between">
-                  About
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </CardTitle>
-                <CardDescription>
-                  Learn about our mission to provide accessible, culturally-sensitive maternal healthcare through AI.
-                </CardDescription>
               </CardHeader>
+              
+              {expandedCard === 'about' && (
+                <CardContent className="animate-fade-in">
+                  <div className="space-y-6 pt-4 border-t border-accent/10">
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3">Our Mission</h4>
+                      <p className="text-muted-foreground">
+                        Mama Care AI is dedicated to reducing maternal mortality rates in underserved communities by providing 
+                        accessible, AI-powered healthcare guidance. We believe every mother deserves quality healthcare support, 
+                        regardless of location or resources.
+                      </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold mb-3">Why We Exist</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Millions lack access to maternal healthcare</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Early detection can save lives</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Cultural barriers prevent seeking help</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-3">Our Values</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <Shield className="w-4 h-4 mt-1 text-trust" />
+                            <span>Privacy and security first</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Globe className="w-4 h-4 mt-1 text-accent" />
+                            <span>Cultural respect and sensitivity</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Clock className="w-4 h-4 mt-1 text-secondary" />
+                            <span>Always available, always caring</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              )}
             </Card>
           </div>
         </div>
