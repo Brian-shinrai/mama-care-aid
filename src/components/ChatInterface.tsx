@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Mic, MicOff, Send, Heart, AlertTriangle, Phone, Languages } from 'lucide-react';
+import { Mic, MicOff, Send, Heart, AlertTriangle, Phone, Languages, PhoneCall } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Message {
@@ -272,6 +272,13 @@ export const ChatInterface = () => {
     sendMessage(inputText);
   };
 
+  const handleVoiceCall = () => {
+    toast({
+      title: 'Voice Call',
+      description: 'Voice agent integration coming soon with ElevenLabs!',
+    });
+  };
+
   return (
     <Card className="h-[600px] flex flex-col bg-gradient-to-br from-card to-muted/20 border-primary/20 shadow-warm">
       {/* Header */}
@@ -339,45 +346,58 @@ export const ChatInterface = () => {
         </div>
       </ScrollArea>
 
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-border/50 bg-gradient-to-r from-background/50 to-muted/30">
-        <div className="flex gap-2">
-          <div className="flex-1 relative">
-            <Input
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder={language === 'en' 
-                ? "Ask about your pregnancy, symptoms, or just chat..."
-                : "Uliza kuhusu ujauzito wako, dalili, au ongea tu..."
-              }
-              className="pr-12 bg-card/80 border-primary/20 focus:border-primary/40 rounded-full"
-              disabled={isListening}
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={isListening ? stopListening : startListening}
-              className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-8 w-8 ${
-                isListening ? 'text-destructive hover:text-destructive/80' : 'text-muted-foreground hover:text-primary'
-              }`}
-            >
-              {isListening ? (
-                <MicOff className="w-4 h-4" />
-              ) : (
-                <Mic className="w-4 h-4" />
-              )}
-            </Button>
-          </div>
-          <Button 
-            type="submit" 
-            disabled={!inputText.trim() || isListening}
-            className="rounded-full shadow-gentle hover:shadow-warm transition-all duration-300"
+      {/* Input Area */}
+      <div className="p-4 border-t border-border/50 bg-gradient-to-r from-background/50 to-muted/30 space-y-3">
+        <div className="flex justify-center">
+          <Button
+            type="button"
+            variant="default"
+            className="gap-2 bg-gradient-trust hover:opacity-90 shadow-trust w-full sm:w-auto"
+            onClick={handleVoiceCall}
           >
-            <Send className="w-4 h-4" />
+            <PhoneCall className="w-4 h-4" />
+            {language === 'en' ? 'Start Voice Call' : 'Anza Simu ya Sauti'}
           </Button>
         </div>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="flex gap-2">
+            <div className="flex-1 relative">
+              <Input
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder={language === 'en' 
+                  ? "Ask about your pregnancy, symptoms, or just chat..."
+                  : "Uliza kuhusu ujauzito wako, dalili, au ongea tu..."
+                }
+                className="pr-12 bg-card/80 border-primary/20 focus:border-primary/40 rounded-full"
+                disabled={isListening}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={isListening ? stopListening : startListening}
+                className={`absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-8 w-8 ${
+                  isListening ? 'text-destructive hover:text-destructive/80' : 'text-muted-foreground hover:text-primary'
+                }`}
+              >
+                {isListening ? (
+                  <MicOff className="w-4 h-4" />
+                ) : (
+                  <Mic className="w-4 h-4" />
+                )}
+              </Button>
+            </div>
+            <Button 
+              type="submit" 
+              disabled={!inputText.trim() || isListening}
+              className="rounded-full shadow-gentle hover:shadow-warm transition-all duration-300"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
+          </div>
+        </form>
+      </div>
     </Card>
   );
 };
