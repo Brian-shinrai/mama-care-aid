@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ChatInterface } from '@/components/ChatInterface';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Heart, Shield, Clock, Globe, Phone, Baby, ChevronRight } from 'lucide-react';
+import { Heart, Shield, Clock, Globe, Phone, Baby, ChevronRight, Home, Info, Lightbulb } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import heroImage from '@/assets/hero-maternal-health.jpg';
 
@@ -88,6 +88,58 @@ const Index = () => {
   };
   return (
     <div className="min-h-screen bg-gradient-soft">
+      {/* Navigation Cards Section */}
+      <section className="py-12 px-4 bg-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="border-primary/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-gradient-maternal mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Home className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <CardTitle className="flex items-center justify-between">
+                  Home
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </CardTitle>
+                <CardDescription>
+                  Your maternal health journey starts here. Access personalized pregnancy guidance and 24/7 AI support.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-trust/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-gradient-trust mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Lightbulb className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <CardTitle className="flex items-center justify-between">
+                  Solutions
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </CardTitle>
+                <CardDescription>
+                  Comprehensive AI-powered maternal care: symptom monitoring, risk detection, and emergency support.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="border-accent/20 hover:shadow-warm transition-all duration-300 group cursor-pointer">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-accent mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Info className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <CardTitle className="flex items-center justify-between">
+                  About
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </CardTitle>
+                <CardDescription>
+                  Learn about our mission to provide accessible, culturally-sensitive maternal healthcare through AI.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-maternal opacity-90" />
