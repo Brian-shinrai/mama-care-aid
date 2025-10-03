@@ -1,20 +1,15 @@
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ChatInterface } from "@/components/ChatInterface";
-import { Home, Lightbulb, Info, ChevronDown, Heart, Shield, Globe, CheckCircle, AlertCircle, Baby, Clock, Phone } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { useToast } from "@/hooks/use-toast";
-import heroImage from "@/assets/hero-maternal-health.jpg";
+import { useState } from 'react';
+import { ChatInterface } from '@/components/ChatInterface';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Heart, Shield, Clock, Globe, Phone, Baby, ChevronRight, Home, Info, Lightbulb } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import heroImage from '@/assets/hero-maternal-health.jpg';
 
 const Index = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const { toast } = useToast();
 
   const features = [
@@ -83,236 +78,430 @@ const Index = () => {
   };
 
   const scrollToChat = () => {
-    document.getElementById('chat-section')?.scrollIntoView({ behavior: 'smooth' });
-    toast({
-      title: 'Chat is Ready! 💕',
-      description: 'Your caring AI companion is waiting to help you.',
-    });
+    const heroSection = document.querySelector('section');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
+      toast({
+        title: 'Chat is Ready! 💕',
+        description: 'Your caring AI companion is waiting to help you.',
+      });
+    }
+  };
+  const handleCardClick = (cardId: string) => {
+    setExpandedCard(expandedCard === cardId ? null : cardId);
   };
 
   return (
     <div className="min-h-screen bg-gradient-soft">
-      {/* Navigation Header with Dropdowns */}
-      <div className="bg-card/80 backdrop-blur-md border-b border-border/50 shadow-gentle sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
-            {/* Home Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2 hover-scale text-base font-medium">
-                  <Home className="w-5 h-5" />
-                  <span className="hidden sm:inline">Home</span>
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-card/95 backdrop-blur-md">
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Heart className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Welcome</div>
-                    <div className="text-xs text-muted-foreground">Your maternal health journey starts here</div>
+      {/* Navigation Cards Section */}
+      <section className="py-12 px-4 bg-primary/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Home Card */}
+            <Card 
+              className={`border-primary/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'home' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('home')}
+            >
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-maternal flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'home' ? 'scale-110' : ''
+                    }`}>
+                      <Home className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        Home
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        Your maternal health journey starts here
+                      </CardDescription>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Baby className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">About Mama Care</div>
-                    <div className="text-xs text-muted-foreground">AI-powered support for expectant mothers</div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'home' ? 'rotate-90' : ''
+                  }`} />
+                </div>
+              </CardHeader>
+              
+              {expandedCard === 'home' && (
+                <CardContent className="animate-fade-in">
+                  <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-primary/10">
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">24/7 AI Companion</h4>
+                      <p className="text-muted-foreground mb-4">
+                        Access personalized pregnancy guidance anytime, anywhere. Our AI understands your unique journey and provides culturally-sensitive support.
+                      </p>
+                      <Button onClick={scrollToChat} className="w-full">
+                        <Heart className="w-4 h-4 mr-2" />
+                        Start Your Journey
+                      </Button>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">What We Offer</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Week-by-week pregnancy tracking</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Symptom monitoring and alerts</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Emergency resource connection</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <ChevronRight className="w-4 h-4 mt-1 text-primary" />
+                          <span>Multilingual support (English & Swahili)</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </CardContent>
+              )}
+            </Card>
 
-            {/* Solutions Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2 hover-scale text-base font-medium">
-                  <Lightbulb className="w-5 h-5" />
-                  <span className="hidden sm:inline">Solutions</span>
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64 bg-card/95 backdrop-blur-md">
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <AlertCircle className="w-5 h-5 text-warning mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Risk Detection</div>
-                    <div className="text-xs text-muted-foreground">Early warning system for pregnancy complications</div>
+            {/* Solutions Card */}
+            <Card 
+              className={`border-trust/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'solutions' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('solutions')}
+            >
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-trust flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'solutions' ? 'scale-110' : ''
+                    }`}>
+                      <Lightbulb className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        Solutions
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        AI-powered maternal care solutions
+                      </CardDescription>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <CheckCircle className="w-5 h-5 text-trust mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Pregnancy Tracking</div>
-                    <div className="text-xs text-muted-foreground">Monitor your baby's development week by week</div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'solutions' ? 'rotate-90' : ''
+                  }`} />
+                </div>
+              </CardHeader>
+              
+              {expandedCard === 'solutions' && (
+                <CardContent className="animate-fade-in">
+                  <div className="grid md:grid-cols-3 gap-6 pt-4 border-t border-trust/10">
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-maternal flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Risk Detection</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Advanced AI monitoring identifies concerning symptoms and guides you on when to seek immediate care.
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
+                        <Baby className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Pregnancy Tracking</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Follow your baby's development with weekly updates, milestone celebrations, and personalized guidance.
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center">
+                        <Globe className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <h4 className="font-semibold">Cultural Sensitivity</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Respectful of local traditions while providing medically sound advice for your community.
+                      </p>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Globe className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Cultural Sensitivity</div>
-                    <div className="text-xs text-muted-foreground">Respect for traditional practices and beliefs</div>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </CardContent>
+              )}
+            </Card>
 
-            {/* About Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2 hover-scale text-base font-medium">
-                  <Info className="w-5 h-5" />
-                  <span className="hidden sm:inline">About</span>
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-72 bg-card/95 backdrop-blur-md">
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Heart className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Our Mission</div>
-                    <div className="text-xs text-muted-foreground">Reducing maternal mortality through AI-powered early detection and culturally sensitive support</div>
+            {/* About Card */}
+            <Card 
+              className={`border-accent/20 hover:shadow-warm transition-all duration-500 cursor-pointer ${
+                expandedCard === 'about' ? 'md:col-span-3 shadow-warm' : ''
+              }`}
+              onClick={() => handleCardClick('about')}
+            >
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 rounded-full bg-accent flex items-center justify-center transition-transform duration-300 ${
+                      expandedCard === 'about' ? 'scale-110' : ''
+                    }`}>
+                      <Info className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        About
+                      </CardTitle>
+                      <CardDescription className="mt-1">
+                        Our mission for accessible maternal care
+                      </CardDescription>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Shield className="w-5 h-5 text-trust mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Why We Exist</div>
-                    <div className="text-xs text-muted-foreground">Every mother deserves access to quality healthcare information</div>
+                  <ChevronRight className={`w-5 h-5 transition-transform duration-300 ${
+                    expandedCard === 'about' ? 'rotate-90' : ''
+                  }`} />
+                </div>
+              </CardHeader>
+              
+              {expandedCard === 'about' && (
+                <CardContent className="animate-fade-in">
+                  <div className="space-y-6 pt-4 border-t border-accent/10">
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3">Our Mission</h4>
+                      <p className="text-muted-foreground">
+                        Mama Care AI is dedicated to reducing maternal mortality rates in underserved communities by providing 
+                        accessible, AI-powered healthcare guidance. We believe every mother deserves quality healthcare support, 
+                        regardless of location or resources.
+                      </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold mb-3">Why We Exist</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Millions lack access to maternal healthcare</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Early detection can save lives</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Heart className="w-4 h-4 mt-1 text-primary" />
+                            <span>Cultural barriers prevent seeking help</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-3">Our Values</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <Shield className="w-4 h-4 mt-1 text-trust" />
+                            <span>Privacy and security first</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Globe className="w-4 h-4 mt-1 text-accent" />
+                            <span>Cultural respect and sensitivity</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <Clock className="w-4 h-4 mt-1 text-secondary" />
+                            <span>Always available, always caring</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-start gap-3 p-4">
-                  <Globe className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <div className="font-semibold text-sm mb-1">Our Values</div>
-                    <div className="text-xs text-muted-foreground">Compassion, cultural respect, and evidence-based care</div>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </CardContent>
+              )}
+            </Card>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Hero Section with Blurred Background */}
-      <div 
-        className="relative min-h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden"
-      >
-        {/* Background Image with Blur */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-          }}
-        >
-          <div className="absolute inset-0 backdrop-blur-sm bg-black/40"></div>
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-maternal opacity-90" />
+        <div className="absolute inset-0">
+          <img 
+            src={heroImage} 
+            alt="Supportive maternal care community" 
+            className="w-full h-full object-cover"
+          />
         </div>
-
-        {/* Content with Enhanced Visibility */}
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-6 py-12 md:py-0">
-          <div className="inline-block animate-fade-in">
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-maternal flex items-center justify-center shadow-warm mx-auto mb-6 border-4 border-white/20">
-              <Heart className="w-8 h-8 md:w-10 md:h-10 text-white" />
+        <div className="relative max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div className="text-center lg:text-left">
+            <h1 className="text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
+              Mama Care AI
+            </h1>
+            <p className="text-xl text-primary-foreground/90 mb-8 leading-relaxed">
+              Your 24/7 maternal health companion, providing personalized pregnancy guidance, 
+              symptom monitoring, and emergency support for mothers everywhere.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="shadow-trust hover:shadow-warm transition-all duration-300"
+                onClick={scrollToChat}
+              >
+                <Heart className="w-5 h-5 mr-2" />
+                Start Caring Journey
+              </Button>
+              <Button size="lg" variant="outline" className="bg-white/10 border-white/20 text-primary-foreground hover:bg-white/20">
+                <Phone className="w-5 h-5 mr-2" />
+                Emergency Help
+              </Button>
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] animate-fade-in">
-            Mama Care AI
-          </h1>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] animate-fade-in">
-            Your Trusted Companion for a Safe Pregnancy Journey
-          </p>
-          <p className="text-base md:text-lg lg:text-xl text-white/95 max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium leading-relaxed animate-fade-in">
-            Empowering expectant mothers with AI-driven insights, culturally sensitive support, 
-            and 24/7 access to maternal health information.
-          </p>
-          <Button 
-            size="lg" 
-            className="bg-white text-primary hover:bg-white/90 shadow-warm text-base md:text-lg px-6 md:px-8 py-5 md:py-6 font-semibold hover-scale animate-fade-in"
-            onClick={scrollToChat}
-          >
-            Start Your Journey
-          </Button>
+          
+          {/* Live Chat Interface */}
+          <div className="w-full lg:w-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20 shadow-2xl">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/20">
+                <div className="w-10 h-10 rounded-full bg-gradient-maternal flex items-center justify-center shadow-lg">
+                  <Heart className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-primary-foreground">Mama Care AI</h3>
+                  <p className="text-sm text-primary-foreground/80">Ready to help you 24/7</p>
+                </div>
+              </div>
+              <ChatInterface />
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Comprehensive Maternal Care
+              Comprehensive Maternal Support
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Everything you need for a healthy pregnancy, powered by AI and delivered with compassion
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Culturally sensitive AI companion designed specifically for expectant mothers 
+              in rural and underserved communities.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature) => {
-              const Icon = feature.icon;
+              const IconComponent = feature.icon;
               return (
-                <Card
+                <Card 
                   key={feature.id}
-                  className={`hover:shadow-warm transition-all duration-300 cursor-pointer hover:-translate-y-1 ${feature.borderColor}`}
+                  className={`${feature.borderColor} shadow-gentle hover:shadow-warm transition-all duration-300 group cursor-pointer transform hover:scale-105`}
                   onClick={() => handleFeatureClick(feature.id)}
                 >
-                  <CardHeader>
-                    <div className={`w-12 h-12 rounded-lg bg-${feature.gradient} flex items-center justify-center mb-4 shadow-gentle`}>
-                      <Icon className="w-6 h-6 text-primary-foreground" />
+                  <CardContent className="p-6 text-center">
+                    <div className={`w-16 h-16 rounded-full ${feature.gradient} mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <IconComponent className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
-                    <CardDescription className="text-base">
+                    <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                    <p className="text-muted-foreground mb-4">
                       {feature.description}
-                    </CardDescription>
-                  </CardHeader>
+                    </p>
+                    <div className="flex items-center justify-center text-primary group-hover:text-primary/80 transition-colors">
+                      <span className="text-sm font-medium">Learn More</span>
+                      <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </CardContent>
                 </Card>
               );
             })}
           </div>
+
+          {/* Feature Details Dialog */}
+          <Dialog open={!!selectedFeature} onOpenChange={() => setSelectedFeature(null)}>
+            <DialogContent className="max-w-md">
+              {selectedFeature && (
+                <>
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-3">
+                      {(() => {
+                        const feature = features.find(f => f.id === selectedFeature);
+                        if (!feature) return null;
+                        const IconComponent = feature.icon;
+                        return (
+                          <>
+                            <div className={`w-10 h-10 rounded-full ${feature.gradient} flex items-center justify-center`}>
+                              <IconComponent className="w-5 h-5 text-primary-foreground" />
+                            </div>
+                            {feature.title}
+                          </>
+                        );
+                      })()}
+                    </DialogTitle>
+                    <DialogDescription className="text-left mt-4">
+                      {features.find(f => f.id === selectedFeature)?.details}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="flex gap-3 mt-6">
+                    <Button onClick={scrollToChat} className="flex-1">
+                      <Heart className="w-4 h-4 mr-2" />
+                      Try This Feature
+                    </Button>
+                    <Button variant="outline" onClick={() => setSelectedFeature(null)}>
+                      Close
+                    </Button>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
 
-      {/* Chat Interface Section */}
-      <section id="chat-section" className="py-20 px-4 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
-              Talk to Mama Care AI
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Your compassionate companion is ready to answer your questions
-            </p>
+      {/* Emergency Resources */}
+      <section className="py-16 px-4 bg-destructive/5 border-t border-destructive/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-destructive mb-4">Emergency Resources</h3>
+          <p className="text-destructive/80 mb-6">
+            If you're experiencing severe symptoms, don't wait. Contact emergency services immediately.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4">
+            <Card className="border-destructive/20 bg-destructive/5">
+              <CardContent className="p-4 text-center">
+                <Phone className="w-6 h-6 text-destructive mx-auto mb-2" />
+                <p className="font-semibold text-destructive">Kenya Emergency</p>
+                <p className="text-destructive/80">999</p>
+              </CardContent>
+            </Card>
+            <Card className="border-destructive/20 bg-destructive/5">
+              <CardContent className="p-4 text-center">
+                <Phone className="w-6 h-6 text-destructive mx-auto mb-2" />
+                <p className="font-semibold text-destructive">US Emergency</p>
+                <p className="text-destructive/80">911</p>
+              </CardContent>
+            </Card>
+            <Card className="border-destructive/20 bg-destructive/5">
+              <CardContent className="p-4 text-center">
+                <Phone className="w-6 h-6 text-destructive mx-auto mb-2" />
+                <p className="font-semibold text-destructive">Local Clinic</p>
+                <p className="text-destructive/80">Contact Info</p>
+              </CardContent>
+            </Card>
           </div>
-          
-          <ChatInterface />
         </div>
       </section>
 
-      {/* Feature Details Dialog */}
-      <Dialog open={selectedFeature !== null} onOpenChange={() => setSelectedFeature(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl flex items-center gap-3">
-              {selectedFeature && (() => {
-                const feature = features.find(f => f.id === selectedFeature);
-                if (!feature) return null;
-                const Icon = feature.icon;
-                return (
-                  <>
-                    <div className={`w-10 h-10 rounded-lg bg-${feature.gradient} flex items-center justify-center`}>
-                      <Icon className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    {feature.title}
-                  </>
-                );
-              })()}
-            </DialogTitle>
-            <DialogDescription className="text-base pt-4">
-              {selectedFeature && features.find(f => f.id === selectedFeature)?.details}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      {/* Footer */}
+      <footer className="py-12 px-4 bg-primary/5 border-t border-primary/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-full bg-gradient-maternal flex items-center justify-center">
+              <Heart className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <h4 className="text-xl font-bold text-foreground">Mama Care AI</h4>
+          </div>
+          <p className="text-muted-foreground mb-4">
+            Empowering mothers with AI-powered healthcare support for safer pregnancies.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Always consult with healthcare professionals for medical decisions. 
+            This AI assistant provides supportive information, not medical diagnosis.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
